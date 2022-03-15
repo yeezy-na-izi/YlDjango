@@ -2,15 +2,15 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(Path(__file__).resolve().parent.parent, '.env')
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Add env
+dotenv_path = os.path.join(BASE_DIR, '.env')
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 ALLOWED_HOSTS = []
 
