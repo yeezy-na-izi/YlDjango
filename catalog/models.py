@@ -1,5 +1,8 @@
 from django.db import models
 from catalog.validators import validate_brilliant, ValidateWordsCount
+from django.core.validators import MaxValueValidator
+from core.models import AbstractTag
+from django.contrib.auth.models import User
 
 
 class Item(models.Model):
@@ -15,6 +18,12 @@ class Item(models.Model):
         ]
     )
     is_published = models.BooleanField(verbose_name='Опубликованно', default=True)
+    tags = models.ManyToManyField(verbose_name='Теги', to='Tag', related_name='items')
+
+    category = models.ForeignKey(verbose_name='Категория', to='Category', related_name='items',
+                                 on_delete=models.CASCADE)
+
+    ratings = models.ManyToManyField(verbose_name='Оценки', to=User, through='rating.Rating', related_name='items')
 
     class Meta:
         verbose_name = 'Товар'
@@ -22,3 +31,19 @@ class Item(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class Tag(AbstractTag):
+    name = models.CharField(verbose_name='name', max_length=120)
+
+    class Meta(AbstractTag.Meta):
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
+
+class Category(AbstractTag):
+    weight = models.IntegerField(verbose_name='Вес', default=100, validators=[MaxValueValidator(32767), ])
+
+    class Meta(AbstractTag.Meta):
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
