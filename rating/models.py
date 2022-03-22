@@ -7,13 +7,14 @@ from catalog.models import Item
 
 class Rating(models.Model):
     choices = (
+        ('0', 'Нет оценки'),
         ('1', 'Ненависть'),
         ('2', 'Неприязнь'),
         ('3', 'Нейтрально'),
         ('4', 'Обожание'),
         ('5', 'Любовь'),
     )
-    star = models.CharField(verbose_name='Оценка', max_length=1, choices=choices)
+    star = models.CharField(verbose_name='Оценка', max_length=1, choices=choices, default=0)
     item = models.ForeignKey(verbose_name='Товар', to='catalog.Item', on_delete=models.CASCADE)
     user = models.ForeignKey(verbose_name='Пользователь', to=User, on_delete=models.CASCADE)
 

@@ -3,9 +3,9 @@ from django.core.validators import BaseValidator
 
 
 def validate_brilliant(value: str):
-    must_word = {'превосходно', 'роскошно'}
-    if not (must_word - (must_word - set(value.split()))):
-        raise ValidationError(f'Обязательно используйте слова {must_word}!')
+    must_words = {'превосходно', 'роскошно'}
+    if len(must_words - set(value.split())) == len(must_words):
+        raise ValidationError(f'Обязательно используйте слова {must_words}!')
 
 
 class ValidateWordsCount(BaseValidator):

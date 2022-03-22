@@ -3,10 +3,10 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 
 from catalog.validators import validate_brilliant, ValidateWordsCount
-from core.models import AbstractTag
+from core.models import SlugMixin, PublishedMixin
 
 
-class Item(models.Model):
+class Item(PublishedMixin):
     name = models.CharField(verbose_name='Имя', max_length=150, help_text='Максимальная длинна 150')
     text = models.TextField(
         verbose_name='Описание',
@@ -19,7 +19,6 @@ class Item(models.Model):
         ]
     )
 
-    is_published = models.BooleanField(verbose_name='Опубликованно', default=True)
     tags = models.ManyToManyField(verbose_name='Теги', to='Tag', related_name='items')
     category = models.ForeignKey(verbose_name='Категория', to='Category', related_name='items',
                                  on_delete=models.CASCADE)
@@ -32,7 +31,7 @@ class Item(models.Model):
         through_fields=('item', 'user')
     )
 
-    class Meta:
+    class Meta(PublishedMixin.Meta):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
@@ -40,15 +39,15 @@ class Item(models.Model):
         return self.name
 
 
-class Tag(AbstractTag):
-    class Meta(AbstractTag.Meta):
+class Tag(SlugMixin, PublishedMixin):
+    class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
 
-class Category(AbstractTag):
+class Category(SlugMixin, PublishedMixin):
     weight = models.IntegerField(verbose_name='Вес', default=100, validators=[MaxValueValidator(32767), ])
 
-    class Meta(AbstractTag.Meta):
+    class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
