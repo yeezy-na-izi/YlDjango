@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator
 from django.db import models
 
 from catalog.validators import validate_brilliant, ValidateWordsCount
@@ -20,8 +19,8 @@ class Item(PublishedMixin):
     )
 
     tags = models.ManyToManyField(verbose_name='Теги', to='Tag', related_name='items')
-    category = models.ForeignKey(verbose_name='Категория', to='Category', related_name='items',
-                                 on_delete=models.CASCADE)
+    category = models.ForeignKey(verbose_name='Категория', to='Category', related_name='items', null=True,
+                                 on_delete=models.SET_NULL)
 
     ratings = models.ManyToManyField(
         verbose_name='Оценки',
@@ -46,7 +45,7 @@ class Tag(SlugMixin, PublishedMixin):
 
 
 class Category(SlugMixin, PublishedMixin):
-    weight = models.IntegerField(verbose_name='Вес', default=100, validators=[MaxValueValidator(32767), ])
+    weight = models.PositiveSmallIntegerField(verbose_name='Вес', default=100)
 
     class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Категория'

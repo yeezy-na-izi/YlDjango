@@ -11,5 +11,15 @@ class ItemAdmin(admin.ModelAdmin):
     filter_horizontal = ('tags',)
 
 
-admin.site.register(Category)
-admin.site.register(Tag)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('slug', 'is_published', 'weight')
+    list_editable = ('is_published',)
+    list_display_links = ('slug',)
+
+
+@admin.register(Tag)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('slug', 'is_published')
+    list_editable = ('is_published',)
+    list_display_links = ('slug',)
