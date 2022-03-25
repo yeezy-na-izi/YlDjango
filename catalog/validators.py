@@ -15,4 +15,4 @@ class ValidateWordsCount(BaseValidator):
 
     def __call__(self, value, *args, **kwargs):
         if len(str(value).split()) < self.count:
-            raise ValidationError(f'Минимальное количество слов - {self.count}')
+            raise ValidationError(f'Минимальное количество слов: {self.count}')

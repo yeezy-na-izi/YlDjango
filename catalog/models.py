@@ -6,21 +6,36 @@ from core.models import SlugMixin, PublishedMixin
 
 
 class Item(PublishedMixin):
-    name = models.CharField(verbose_name='Имя', max_length=150, help_text='Максимальная длинна 150')
+    name = models.CharField(
+        verbose_name='Имя',
+        max_length=150,
+        help_text='Максимальная длинна 150'
+    )
     text = models.TextField(
         verbose_name='Описание',
         help_text='Минимум 2 слова',
         validators=[
             validate_brilliant,
-            # Сделал класс для валидатора, чтобы была возможность использовать его с разным количеством слов
-            # MinLengthValidator проверяет на количество символов, что не соответствует ТЗ
+            # Сделал класс для валидатора,
+            # возможность использовать его с разным количеством слов
+            # MinLengthValidator проверяет на количество символов,
+            # что не соответствует ТЗ
             ValidateWordsCount(2),
         ]
     )
 
-    tags = models.ManyToManyField(verbose_name='Теги', to='Tag', related_name='items')
-    category = models.ForeignKey(verbose_name='Категория', to='Category', related_name='items', null=True,
-                                 on_delete=models.SET_NULL)
+    tags = models.ManyToManyField(
+        verbose_name='Теги',
+        to='Tag',
+        related_name='items'
+    )
+    category = models.ForeignKey(
+        verbose_name='Категория',
+        to='Category',
+        related_name='items',
+        null=True,
+        on_delete=models.SET_NULL
+    )
 
     ratings = models.ManyToManyField(
         verbose_name='Оценки',

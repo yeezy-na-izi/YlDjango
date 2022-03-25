@@ -19,7 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Tag)
-class CategoryAdmin(admin.ModelAdmin):
+class TagAdmin(admin.ModelAdmin):
     list_display = ('slug', 'is_published')
     list_editable = ('is_published',)
     list_display_links = ('slug',)
