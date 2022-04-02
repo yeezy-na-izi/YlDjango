@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}Заголовок страницы{% endblock %}
+    </title>
+</head>
+<body>
+{% include 'includes/header.html' %}
+
+{% block content %}
+    <section style="height: 85vh">
+        <h1>Главная</h1>
+        <div>
+            <a href="{% url 'admin:index' %}">Админка</a><br>
+            <a href="https://t.me/yeezy_na_izi">Мой тг</a>
+        </div>
+    </section>
+{% endblock %}
+
+{% include 'includes/footer.html' %}
+</body>
+</html>

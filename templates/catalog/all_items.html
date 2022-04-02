@@ -1,0 +1,16 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    All items
+{% endblock %}
+
+{% block content %}
+    <section style="height: 85vh">
+        <h1>Все предметы</h1>
+        <div>
+            <a href="{% url 'item_detail' 1 %}">
+                Тестовый элемент
+            </a>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    All users
+{% endblock %}
+
+{% block content %}
+    <section style="height: 85vh">
+        <h1>Все пользователи</h1>
+        <div>
+            <a href="{% url 'detail_users' 1 %}">
+                Тестовый юзер
+            </a>
+            <br>
+            <a href="{% url 'signup' %}">
+                Зайти
+            </a>
+            <br>
+            <a href="{% url 'profile' %}">
+                Профиль
+            </a>
+        </div>
+    </section>
+{% endblock %}

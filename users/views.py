@@ -1,17 +1,25 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import render
 
 
 def user_list(request):
-    return HttpResponse('<h1>User list</h1>')
+    context = {}
+
+    return render(request, 'users/all_users.html', context)
 
 
 def user_detail(request, pk):
-    return HttpResponse(f'<h1>User detail pk={pk}</h1>')
+    context = {'id': pk}
+
+    return render(request, 'users/user_detail.html', context)
 
 
 def signup(request):
-    return HttpResponse('<h1>Signup</h1>')
+    context = {}
+
+    return render(request, 'users/signup.html', context)
 
 
 def profile(request):
-    return HttpResponse('<h1>Profile</h1>')
+    context = {}
+
+    return render(request, 'users/profile.html', context)
