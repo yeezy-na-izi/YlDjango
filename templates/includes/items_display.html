@@ -1,0 +1,25 @@
+{% load custom_tags %}
+<div class="row">
+    {% for item in items %}
+        <div class="col-sm-6">
+            <div class="card m-2" style="width: 35rem;">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h5>
+                            {{ item.name }}
+                        </h5>
+                        {% for tag in item.tags.all %}
+                            <span class="badge bg-success">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    <p class="card-text">Описание: {{ item.text|word_to:10 }}</p>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'item_detail' item.pk %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <h3>Так стоп, а где товары?</h3>
+    {% endfor %}
+</div>

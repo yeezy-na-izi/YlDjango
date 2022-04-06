@@ -5,10 +5,18 @@
 {% endblock %}
 
 {% block content %}
-    <section style="height: 85vh">
-        <h1>Элемент {{ id }}</h1>
+    <section class="container">
+        <h2>Товар: {{ item.name }}</h2>
         <div>
-            <p> Он очень крут</p>
+            <p>Категория: {{ item.category }}</p>
+            <p>Описание: {{ item.text }}</p>
+            <p>Теги:</p>
+            {% for tag in item.tags.all %}
+                <p>
+                    {{ tag.name }}
+                </p>
+            {% endfor %}
         </div>
+
     </section>
 {% endblock %}

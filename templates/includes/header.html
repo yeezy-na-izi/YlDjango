@@ -1,11 +1,41 @@
 <header>
-    <div>
-        Подними голову, я даже еще выше
-    </div>
-    <div>
-        <a href="{% url 'homepage' %}">Домой</a>
-        <a href="{% url 'about' %}">Описание</a>
-        <a href="{% url 'all_items' %}">Каталог</a>
-        <a href="{% url 'all_users' %}">Пользователи</a>
-    </div>
+    {#    <div>#}
+    {#        Подними голову, я даже еще выше#}
+    {#    </div>#}
+    {#    <div>#}
+    {#        <a href="{% url 'homepage' %}">Домой</a>#}
+    {#        <a href="{% url 'about' %}">Описание</a>#}
+    {#        <a href="">Каталог</a>#}
+    {#        <a href="{% url 'all_users' %}">Пользователи</a>#}
+    {#        {% if request.user.is_superuser %}#}
+    {#            <a href="{% url 'admin:index' %}">Админка</a>#}
+    {#        {% endif %}#}
+    {#    </div>#}
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">Домой</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">Описание</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all_items' %}">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'all_users' %}">Пользователи</a>
+                    </li>
+                    {% if request.user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'admin:index' %}">Админка</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>

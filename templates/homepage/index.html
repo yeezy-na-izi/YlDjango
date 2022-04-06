@@ -3,3 +3,12 @@
 {% block title %}
     Homepage
 {% endblock %}
+
+{% block content %}
+    <section class="container">
+        {% if items %}
+            <h2>Товары</h2>
+        {% endif %}
+        {% include 'includes/items_display.html' %}
+    </section>
+{% endblock %}

@@ -54,14 +54,23 @@ class Item(PublishedMixin):
 
 
 class Tag(SlugMixin, PublishedMixin):
+    name = models.CharField(verbose_name='Имя', max_length=255, default='')
+
     class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
+    def __str__(self):
+        return self.name
+
 
 class Category(SlugMixin, PublishedMixin):
+    name = models.CharField(verbose_name='Имя', max_length=255, default='')
     weight = models.PositiveSmallIntegerField(verbose_name='Вес', default=100)
 
     class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.name

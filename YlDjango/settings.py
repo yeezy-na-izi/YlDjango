@@ -14,6 +14,10 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,9 +32,12 @@ INSTALLED_APPS = [
     'rating.apps.RatingConfig',
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
+    # My plugins
+    'debug_toolbar.apps.DebugToolbarConfig',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +61,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'custom_tags': 'core.custom_tags',
+            }
         },
     },
 ]
