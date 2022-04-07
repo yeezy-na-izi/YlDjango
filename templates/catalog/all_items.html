@@ -18,7 +18,8 @@
                     {% include 'includes/items_display.html' %}
                 {% endwith %}
             {% endif %}
-
+            {% empty %}
+            <h3>Товары не завезли, можешь уходить)</h3>
         {% endfor %}
     </section>
 {% endblock %}
