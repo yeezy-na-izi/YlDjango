@@ -1,16 +1,8 @@
 from django.shortcuts import render
-from catalog.models import Item, Tag
-from django.db.models import Prefetch
+from catalog.models import Item
 
 
 def home(request):
-    items = (
-        Item.objects.filter(is_published=True).order_by('?')[:3].prefetch_related(
-            Prefetch(
-                'tags',
-                queryset=Tag.objects.filter(is_published=True)
-            )
-        )
-    )
+    items = Item.objects.published_item_and_tags().order_by('?')[:3]
     context = {'items': items}
     return render(request, 'homepage/index.html', context)

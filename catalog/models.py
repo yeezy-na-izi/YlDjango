@@ -1,8 +1,34 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Prefetch
 
 from catalog.validators import validate_brilliant, ValidateWordsCount
 from core.models import SlugMixin, PublishedMixin
+
+
+class CategoryManager(models.Manager):
+    def published_category_and_items(self):
+        return self.filter(is_published=True).prefetch_related(
+            Prefetch(
+                'items',
+                queryset=Item.objects.published_item_and_tags()
+            )
+        )
+
+
+class ItemManager(models.Manager):
+    def published_item_and_tags(self):
+        return self.filter(is_published=True).prefetch_related(
+            Prefetch(
+                'tags',
+                queryset=Tag.objects.published_tags(),
+            )
+        )
+
+
+class TagManager(models.Manager):
+    def published_tags(self):
+        return self.filter(is_published=True)
 
 
 class Item(PublishedMixin):
@@ -45,6 +71,8 @@ class Item(PublishedMixin):
         through_fields=('item', 'user')
     )
 
+    objects = ItemManager()
+
     class Meta(PublishedMixin.Meta):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
@@ -55,6 +83,7 @@ class Item(PublishedMixin):
 
 class Tag(SlugMixin, PublishedMixin):
     name = models.CharField(verbose_name='Имя', max_length=255, default='')
+    objects = TagManager()
 
     class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Тег'
@@ -67,6 +96,8 @@ class Tag(SlugMixin, PublishedMixin):
 class Category(SlugMixin, PublishedMixin):
     name = models.CharField(verbose_name='Имя', max_length=255, default='')
     weight = models.PositiveSmallIntegerField(verbose_name='Вес', default=100)
+
+    objects = CategoryManager()
 
     class Meta(SlugMixin.Meta, PublishedMixin.Meta):
         verbose_name = 'Категория'

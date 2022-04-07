@@ -6,9 +6,19 @@
 
 {% block content %}
     <section class="container">
-        {% if items %}
+        {% if categories %}
             <h2>Все предметы</h2>
         {% endif %}
-        {% include 'includes/items_display.html' %}
+        {% for category in categories %}
+            {% if category.items.all %}
+                <h3 class="m-2">
+                    {{ category.name }}
+                </h3>
+                {% with items=category.items.all %}
+                    {% include 'includes/items_display.html' %}
+                {% endwith %}
+            {% endif %}
+
+        {% endfor %}
     </section>
 {% endblock %}

@@ -1,19 +1,12 @@
-from django.db.models import Prefetch
 from django.shortcuts import render
 from django.http import Http404
-from catalog.models import Item, Tag
-
-from django.shortcuts import get_object_or_404
+from catalog.models import Item, Category
 
 
 def item_list(request):
-    items = Item.objects.filter(is_published=True).prefetch_related(
-        Prefetch(
-            'tags',
-            queryset=Tag.objects.filter(is_published=True)
-        )
-    )
-    context = {'items': items}
+    categories = Category.objects.published_category_and_items().order_by('weight')
+
+    context = {'categories': categories}
     return render(request, 'catalog/all_items.html', context)
 
 

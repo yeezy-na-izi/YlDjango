@@ -1,16 +1,4 @@
 <header>
-    {#    <div>#}
-    {#        Подними голову, я даже еще выше#}
-    {#    </div>#}
-    {#    <div>#}
-    {#        <a href="{% url 'homepage' %}">Домой</a>#}
-    {#        <a href="{% url 'about' %}">Описание</a>#}
-    {#        <a href="">Каталог</a>#}
-    {#        <a href="{% url 'all_users' %}">Пользователи</a>#}
-    {#        {% if request.user.is_superuser %}#}
-    {#            <a href="{% url 'admin:index' %}">Админка</a>#}
-    {#        {% endif %}#}
-    {#    </div>#}
     <nav class="navbar navbar-expand-lg  navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'homepage' %}">Домой</a>
