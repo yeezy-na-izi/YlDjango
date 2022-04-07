@@ -13,7 +13,13 @@ def item_list(request):
 def item_detail(request, pk):
     try:
         item = Item.objects.get(pk=pk)
+        category = item.category
+        tags = item.tags.all()
     except Item.DoesNotExist:
         raise Http404('Item does not found')
-    context = {'item': item}
+    context = {
+        'item': item,
+        'category': category,
+        'tags': tags
+    }
     return render(request, 'catalog/item_detail.html', context)

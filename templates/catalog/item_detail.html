@@ -8,10 +8,10 @@
     <section class="container">
         <h2>Товар: {{ item.name }}</h2>
         <div>
-            <p>Категория: {{ item.category }}</p>
+            <p>Категория: {{ category.name }}</p>
             <p>Описание: {{ item.text }}</p>
             <p>Теги:</p>
-            {% for tag in item.tags.all %}
+            {% for tag in tags %}
                 <p>
                     {{ tag.name }}
                 </p>
