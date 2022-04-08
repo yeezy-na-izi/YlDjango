@@ -6,4 +6,4 @@ def description(request):
 
     context = {}
 
-    return render(request, 'about/description.html', context)
+    return render(request, template_name, context)

@@ -1,11 +1,10 @@
 from django.core.validators import BaseValidator
 from django.forms import ValidationError
-from django.core.validators import BaseValidator
 
 
 def validate_brilliant(value: str):
     must_words = {'превосходно', 'роскошно'}
-    if len(must_words - set(value.split())) == len(must_words):
+    if len(must_words - set(value.lower().split())) == len(must_words):
         raise ValidationError(f'Обязательно используйте слова {must_words}!')
 
 
