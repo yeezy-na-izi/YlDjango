@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Prefetch
 
-from catalog.validators import validate_brilliant, ValidateWordsCount
-from core.models import SlugMixin, PublishedMixin
+from catalog.validators import ValidateWordsCount, validate_brilliant
+from core.models import PublishedMixin, SlugMixin
 
 
 class CategoryManager(models.Manager):

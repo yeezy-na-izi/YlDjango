@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.http import Http404
-from catalog.models import Item, Category
+from django.shortcuts import get_object_or_404, render
+
+from catalog.models import Category, Item
 
 
 def item_list(request):

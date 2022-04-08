@@ -1,6 +1,7 @@
 import random
 
 from django.shortcuts import render
+
 from catalog.models import Item
 
 

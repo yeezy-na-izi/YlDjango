@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
-from django.contrib.auth.models import User
 
 
 class Rating(models.Model):
@@ -35,3 +35,6 @@ class Rating(models.Model):
         constraints = [
             UniqueConstraint(fields=['item', 'user', ], name='unique_rating')
         ]
+
+    def __str__(self):
+        return f'{self.user} {self.item} {self.star}'
