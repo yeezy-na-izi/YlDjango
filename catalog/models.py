@@ -13,7 +13,7 @@ class CategoryManager(models.Manager):
                 'items',
                 queryset=Item.objects.published_item_and_tags()
             )
-        )
+        ).only('name')
 
 
 class ItemManager(models.Manager):
@@ -23,7 +23,7 @@ class ItemManager(models.Manager):
                 'tags',
                 queryset=Tag.objects.published_tags(),
             )
-        )
+        ).only('name', 'text', 'tags__name')
 
 
 class TagManager(models.Manager):
