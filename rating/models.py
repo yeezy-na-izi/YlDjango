@@ -5,23 +5,23 @@ from django.db.models.constraints import UniqueConstraint
 
 class Rating(models.Model):
     choices = (
-        ('0', 'Нет оценки'),
-        ('1', 'Ненависть'),
-        ('2', 'Неприязнь'),
-        ('3', 'Нейтрально'),
-        ('4', 'Обожание'),
-        ('5', 'Любовь'),
+        (0, 'Нет оценки'),
+        (1, 'Ненависть'),
+        (2, 'Неприязнь'),
+        (3, 'Нейтрально'),
+        (4, 'Обожание'),
+        (5, 'Любовь'),
     )
-    star = models.CharField(
+    star = models.SmallIntegerField(
         verbose_name='Оценка',
-        max_length=1,
         choices=choices,
         default=0
     )
     item = models.ForeignKey(
         verbose_name='Товар',
         to='catalog.Item',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='item_stars'
     )
     user = models.ForeignKey(
         verbose_name='Пользователь',

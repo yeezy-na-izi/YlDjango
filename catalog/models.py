@@ -1,34 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models import Prefetch
 
+from catalog.managers import ItemManager, TagManager, CategoryManager
 from catalog.validators import ValidateWordsCount, validate_brilliant
 from core.models import PublishedMixin, SlugMixin
-
-
-class CategoryManager(models.Manager):
-    def published_category_and_items(self):
-        return self.filter(is_published=True).prefetch_related(
-            Prefetch(
-                'items',
-                queryset=Item.objects.published_item_and_tags()
-            )
-        ).only('name')
-
-
-class ItemManager(models.Manager):
-    def published_item_and_tags(self):
-        return self.filter(is_published=True).prefetch_related(
-            Prefetch(
-                'tags',
-                queryset=Tag.objects.published_tags(),
-            )
-        ).only('name', 'text', 'tags__name')
-
-
-class TagManager(models.Manager):
-    def published_tags(self):
-        return self.filter(is_published=True)
 
 
 class Item(PublishedMixin):
@@ -42,10 +17,6 @@ class Item(PublishedMixin):
         help_text='Минимум 2 слова',
         validators=[
             validate_brilliant,
-            # Сделал класс для валидатора,
-            # возможность использовать его с разным количеством слов
-            # MinLengthValidator проверяет на количество символов,
-            # что не соответствует ТЗ
             ValidateWordsCount(2),
         ]
     )

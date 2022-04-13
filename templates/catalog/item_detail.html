@@ -7,16 +7,44 @@
 {% block content %}
     <section class="container">
         <h2>Товар: {{ item.name }}</h2>
-        <div>
+        {% if stars.star__avg %}
+            <p>Средняя оценка: {{ stars.star__avg }}</p>
+            <p>Количество оценок: {{ stars.star__count }}</p>
+        {% else %}
+            <p>Товар еще никто не оценил</p>
+        {% endif %}
+
+        {% for tag in item.tags.all %}
+            <span class="badge bg-success">{{ tag.name }}</span>
+        {% endfor %}
+
+        <div class="mt-3">
             <p>Категория: {{ item.category.name }}</p>
             <p>Описание: {{ item.text }}</p>
-            <p>Теги:</p>
-            {% for tag in item.tags.all %}
-                <p>
-                    {{ tag.name }}
-                </p>
-            {% endfor %}
         </div>
-
+        {% if request.user.is_authenticated %}
+            <div class="mt-3">
+                <h4>Оценить</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for i in star_dict %}
+                        <div class="form-check">
+                            <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="rate"
+                                    value="{{ i.0 }}"
+                                    id="RadioRate{{ forloop.counter0 }}"
+                                    {% if forloop.counter0 == user_star %} checked {% endif %}
+                            >
+                            <label class="form-check-label" for="RadioRate{{ forloop.counter0 }}">
+                                {{ i.1 }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn-sm btn-primary">Оценить</button>
+                </form>
+            </div>
+        {% endif %}
     </section>
 {% endblock %}
