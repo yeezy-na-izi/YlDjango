@@ -24,7 +24,7 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'signup' %}">Войти</a>
+                            {% include 'includes/login_form.html' %}
                         </li>
                     {% endif %}
                     {% if request.user.is_superuser %}

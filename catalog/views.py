@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Avg, Count
 from django.views.generic import View
@@ -41,7 +40,6 @@ class ItemDetail(View):
 
         return render(request, self.template_name, context)
 
-    # @login_required
     def post(self, request, pk):
         item = get_object_or_404(self.items, pk=pk)
         if request.POST['rate'] in ['0', '1', '2', '3', '4', '5'] and request.user.is_authenticated:
