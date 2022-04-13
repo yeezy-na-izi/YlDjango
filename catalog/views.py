@@ -25,12 +25,13 @@ class ItemDetail(View):
         star_dict = Rating.choices
         item = get_object_or_404(self.items, pk=pk)
         stars = Rating.objects.filter(item=item, star__in=[1, 2, 3, 4, 5]).aggregate(Avg('star'), Count('star'))
-
-        try:
-            user_star = Rating.objects.only('star').get(item=item, user=request.user).star
-        except Rating.DoesNotExist:
+        if request.user.is_authenticated:
+            try:
+                user_star = Rating.objects.get(item=item, user=request.user).star
+            except Rating.DoesNotExist:
+                user_star = 0
+        else:
             user_star = 0
-
         context = {
             'item': item,
             'star_dict': star_dict,
