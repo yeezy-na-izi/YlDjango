@@ -47,7 +47,7 @@ class ItemDetail(View):
         if 'rate' in request.POST and request.POST['rate'].isdigit():
             rate = int(request.POST['rate'])
 
-            if rate in Rating.choices and request.user.is_authenticated:
+            if rate in dict(Rating.choices).keys() and request.user.is_authenticated:
                 Rating.objects.update_or_create(
                     item=item,
                     user=request.user,
