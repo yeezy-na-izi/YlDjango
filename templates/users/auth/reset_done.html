@@ -1,0 +1,11 @@
+{% extends 'includes/index.html' %}
+
+{% block title %}
+    Сброс пароля
+{% endblock %}
+
+{% block content %}
+    <h3>Восстановление пароля завершено</h3>
+    <p>Ваш пароль был сохранен. Теперь вы можете войти.</p>
+    <a class="btn btn-primary" href="{% url 'login' %}">Войти</a>
+{% endblock %}

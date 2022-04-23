@@ -93,6 +93,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.User'
+
 LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
@@ -104,3 +106,17 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/auth/login'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/catalog/'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'project-for-lyceum@yandex.ru'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_PORT = 587
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+
+# Знаю, что нельзя так указывать, но для проверки)
+EMAIL_HOST_PASSWORD = 'yandex-lyceum'

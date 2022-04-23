@@ -22,9 +22,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'profile' %}">Профиль</a>
                         </li>
-                    {% else %}
+                    {% elif request.path_info != '/auth/login/' %}
                         <li class="nav-item">
-                            {% include 'includes/login_form.html' %}
+                            <a class="nav-link" href="{% url 'login' %}">Вход</a>
                         </li>
                     {% endif %}
                     {% if request.user.is_superuser %}

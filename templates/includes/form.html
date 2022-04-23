@@ -1,0 +1,24 @@
+{% extends 'includes/index.html' %}
+
+{% block content %}
+    <section class="container">
+
+        <h1>{% block form_title %}Заголовок{% endblock %}</h1>
+
+        <div class="container">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.errors }}
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                {% block buttons %}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                {% endblock %}
+            </form>
+        </div>
+    </section>
+{% endblock %}
