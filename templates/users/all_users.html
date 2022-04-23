@@ -1,24 +1,39 @@
 {% extends 'includes/index.html' %}
 
 {% block title %}
-    All users
+    Список пользователей
 {% endblock %}
 
 {% block content %}
-    <section style="height: 85vh">
-        <h1>Все пользователи</h1>
-        <div>
-            <a href="{% url 'detail_users' 1 %}">
-                Тестовый юзер
-            </a>
-            <br>
-            <a href="{% url 'login' %}">
-                Зайти
-            </a>
-            <br>
-            <a href="{% url 'profile' %}">
-                Профиль
-            </a>
+    <div class="container">
+        <h1>Список пользователей</h1>
+        <div class="row-cols-2">
+            {% for user in users %}
+                <div class="col-sm-4">
+                    <div class="card m-2" style="width: 35rem;">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h5>
+                                    {{ user }}
+                                </h5>
+                            </div>
+                            {% if user.email or user.first_name or user.last_name %}
+                                <p class="card-text">
+                                    {{ user.email }}
+                                    {% if user.profile.birthday %}<br>{{ user.profile.birthday }}{% endif %}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <a href="{% url 'detail_users' user.pk %}" class="btn btn-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h3>Пользователей нет</h3>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+
+
 {% endblock %}

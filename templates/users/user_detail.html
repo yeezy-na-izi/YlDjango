@@ -1,14 +1,31 @@
 {% extends 'includes/index.html' %}
 
 {% block title %}
-    User {{ id }}
+    Информация о пользователе
 {% endblock %}
 
 {% block content %}
-    <section style="height: 85vh">
-        <h1>User {{ id }}</h1>
-        <div>
-            <p> Он очень крут</p>
-        </div>
-    </section>
+    <div class="container">
+        <h1>Информация о пользователе</h1>
+        {% if user.first_name %}
+            <p>Имя: {{ user.first_name }}</p>
+        {% endif %}
+        {% if user.last_name %}
+            <p>Фамилия: {{ user.last_name }}</p>
+        {% endif %}
+        {% if user.email %}
+            <p>Почта: {{ user.email }}</p>
+        {% endif %}
+        {% if user.profile.birthday %}
+            <p>День рождения: {{ user.profile.birthday }}</p>
+        {% endif %}
+
+        {% if items %}
+            <h3>Список любимых товаров</h3>
+            {% include 'includes/items_display.html' %}
+        {% else %}
+            <h3>Любимых товаров нет</h3>
+        {% endif %}
+    </div>
+
 {% endblock %}

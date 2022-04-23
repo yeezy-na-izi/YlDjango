@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.db.models import Prefetch
+from django.shortcuts import render, redirect, get_object_or_404
 
 from catalog.models import Item
 import django.contrib.auth.views as admin_views
 
 from users.forms import UserForm, ProfileForm, RegistrationForm
+from users.models import Profile, User
 
 
 @login_required
@@ -32,20 +34,32 @@ def profile(request):
     return render(request, template_name, context=context)
 
 
+def user_detail(request, id_user):
+    template_name = 'users/user_detail.html'
+    user = get_object_or_404(User.objects.only(
+        'email', 'first_name', 'last_name', 'profile__birthday'
+    ).select_related('profile'), pk=id_user)
+    liked_items = Item.objects.user_liked_items(user)
+
+    context = {
+        'user': user,
+        'items': liked_items,
+    }
+
+    return render(request, template_name, context=context)
+
+
 def user_list(request):
     template_name = 'users/all_users.html'
+    users = User.objects.prefetch_related(
+        Prefetch('profile', queryset=Profile.objects.all())
+    )
 
-    context = {}
+    context = {
+        'users': users
+    }
 
-    return render(request, template_name, context)
-
-
-def user_detail(request, pk):
-    template_name = 'users/user_detail.html'
-
-    context = {'id': pk}
-
-    return render(request, template_name, context)
+    return render(request, template_name, context=context)
 
 
 def signup(request):
