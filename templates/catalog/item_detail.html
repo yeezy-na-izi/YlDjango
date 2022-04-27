@@ -46,5 +46,10 @@
                 </form>
             </div>
         {% endif %}
+        <img class="img-fluid" src="{{ item.get_image_x1280.url }}">
+        <h2> Галерея </h2>
+        {% for item_image in item.gallery.all %}
+            <img class="img-fluid" src="{{ item_image.get_image_400x300.url }}">
+        {% endfor %} 
     </section>
 {% endblock %}

@@ -103,7 +103,7 @@ class Category(SlugMixin, PublishedMixin):
         return self.name
 
 
-class Gallery(models.Model):
+class Image(models.Model):
     image = models.ImageField(
         upload_to='uploads/',
         verbose_name='Изображение'
@@ -116,6 +116,17 @@ class Gallery(models.Model):
         on_delete=models.CASCADE
     )
 
+    def get_image_400x300(self):
+        return get_thumbnail(self.image, '400x300', crop='center', quality=51)
+    
+    def image_tmb(self):
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" width="50">')
+        return 'Нет изображения'
+    
+    image_tmb.short_descriptions = 'Превью'
+    image_tmb.allow_tags = True
+
     class Meta():
-        verbose_name = 'Галерея'
-        verbose_name_plural = 'Галереи'
+        verbose_name = 'Изображение'
+        verbose_name_plural = 'Изображения'

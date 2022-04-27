@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from catalog.models import Category, Item, Tag
+from catalog.models import Category, Item, Tag, Image
 
 
 @admin.register(Item)
@@ -23,3 +23,8 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'is_published')
     list_editable = ('is_published',)
     list_display_links = ('name', 'slug',)
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ('image', 'item')
