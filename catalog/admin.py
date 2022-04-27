@@ -5,7 +5,7 @@ from catalog.models import Category, Item, Tag
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_published', 'text')
+    list_display = ('name', 'is_published', 'text', 'image_tmb')
     list_editable = ('is_published',)
     list_display_links = ('name', 'text')
     filter_horizontal = ('tags',)

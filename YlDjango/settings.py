@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     # My plugins
     'debug_toolbar.apps.DebugToolbarConfig',
+
+    'sorl.thumbnail',
+    'django_cleanup.apps.CleanupConfig'
 ]
 
 MIDDLEWARE = [
@@ -95,6 +98,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/uploads/'
+
+MEDIA_ROOT = ''
+
 AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'ru'
@@ -122,5 +129,3 @@ EMAIL_PORT = 587
 
 # Знаю, что нельзя так указывать, но для проверки)
 EMAIL_HOST_PASSWORD = 'yandex-lyceum'
-
-

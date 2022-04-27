@@ -5,6 +5,9 @@ from catalog.managers import ItemManager, TagManager, CategoryManager
 from catalog.validators import ValidateWordsCount, validate_brilliant
 from core.models import PublishedMixin, SlugMixin
 
+from sorl.thumbnail import get_thumbnail
+from django.utils.safestring import mark_safe
+
 
 class Item(PublishedMixin):
     name = models.CharField(
@@ -42,6 +45,27 @@ class Item(PublishedMixin):
         through_fields=('item', 'user')
     )
 
+    image = models.ImageField(
+        upload_to='uploads/',
+        verbose_name='Изображение',
+        null=True
+    )
+
+    def get_image_x1280(self):
+        return get_thumbnail(self.image, '1280', quality=51)
+    
+
+    def get_image_400x300(self):
+        return get_thumbnail(self.image, '400x300', crop='center', quality=51)
+    
+    def image_tmb(self):
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" width="50">')
+        return 'Нет изображения'
+    
+    image_tmb.short_descriptions = 'Превью'
+    image_tmb.allow_tags = True
+
     objects = ItemManager()
 
     class Meta(PublishedMixin.Meta):
@@ -76,3 +100,21 @@ class Category(SlugMixin, PublishedMixin):
 
     def __str__(self):
         return self.name
+
+
+class Gallery(models.Model):
+    image = models.ImageField(
+        upload_to='uploads/',
+        verbose_name='Изображение'
+    )
+
+    item = models.ForeignKey(
+        verbose_name='Товар',
+        to='Item',
+        related_name='gallery',
+        on_delete=models.CASCADE
+    )
+
+    class Meta():
+        verbose_name = 'Галерея'
+        verbose_name_plural = 'Галереи'
