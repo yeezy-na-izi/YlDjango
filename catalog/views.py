@@ -6,14 +6,15 @@ from catalog.models import Category, Item
 from rating.models import Rating
 
 
-def item_list(request):
+class ItemList(View):
     template_name = 'catalog/all_items.html'
 
-    categories = Category.objects.published_category_and_items().order_by('weight')
+    def get(self, request):
+        categories = Category.objects.published_category_and_items().order_by('weight')
 
-    context = {'categories': categories}
+        context = {'categories': categories}
 
-    return render(request, template_name, context)
+        return render(request, self.template_name, context)
 
 
 class ItemDetail(View):
