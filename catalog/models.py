@@ -54,16 +54,15 @@ class Item(PublishedMixin):
 
     def get_image_x1280(self):
         return get_thumbnail(self.image, '1280', quality=51)
-    
 
     def get_image_400x300(self):
         return get_thumbnail(self.image, '400x300', crop='center', quality=51)
-    
+
     def image_tmb(self):
         if self.image:
             return mark_safe(f'<img src="{self.image.url}" width="50">')
         return 'Нет изображения'
-    
+
     image_tmb.short_descriptions = 'Превью'
     image_tmb.allow_tags = True
 
@@ -118,15 +117,18 @@ class Image(models.Model):
 
     def get_image_400x300(self):
         return get_thumbnail(self.image, '400x300', crop='center', quality=51)
-    
+
     def image_tmb(self):
         if self.image:
             return mark_safe(f'<img src="{self.image.url}" width="50">')
         return 'Нет изображения'
-    
+
     image_tmb.short_descriptions = 'Превью'
     image_tmb.allow_tags = True
 
-    class Meta():
+    def __str__(self):
+        return self.item
+
+    class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'

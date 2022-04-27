@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
@@ -10,7 +9,7 @@ from users.forms import UserForm, ProfileForm, RegistrationForm
 from users.models import Profile, User
 
 
-class Profile(View):
+class ProfilePage(View):
     template_name = 'users/profile.html'
 
     def get(self, request):
