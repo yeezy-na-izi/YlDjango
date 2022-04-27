@@ -1,9 +1,15 @@
 from django.shortcuts import render
 
+from django.views.generic import TemplateView
 
-def description(request):
+
+class DescriptionView(TemplateView):
     template_name = 'about/description.html'
 
-    context = {}
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
