@@ -93,6 +93,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+STATIC_URL = '/static/'
+
 AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'ru'
@@ -120,3 +122,5 @@ EMAIL_PORT = 587
 
 # Знаю, что нельзя так указывать, но для проверки)
 EMAIL_HOST_PASSWORD = 'yandex-lyceum'
+
+
