@@ -20,7 +20,7 @@
 
         <div class="mt-3">
             <p>Категория: {{ item.category.name }}</p>
-            <p>Описание: {{ item.text }}</p>
+            <p>Описание: {{ item.text|safe }}</p>
         </div>
         {% if request.user.is_authenticated %}
             <div class="mt-3">

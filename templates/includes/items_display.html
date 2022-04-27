@@ -11,7 +11,7 @@
                             <span class="badge bg-success">{{ tag.name }}</span>
                         {% endfor %}
                     </div>
-                    <p class="card-text">Описание: {{ item.text|truncatewords:10 }}</p>
+                    <p class="card-text">Описание: {{ item.text|safe|truncatewords:10 }} </p>
                 </div>
                 <div class="card-body">
                     <a href="{% url 'item_detail' item.pk %}" class="btn btn-primary">Подробнее</a>

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     # My plugins
     'debug_toolbar.apps.DebugToolbarConfig',
+    'tinymce',
 ]
 
 MIDDLEWARE = [

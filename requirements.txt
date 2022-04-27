@@ -2,6 +2,7 @@ asgiref==3.5.0
 Django==3.2.12
 django-debug-toolbar==3.2.4
 django-extensions==3.1.5
+django-tinymce==3.4.0
 flake8==4.0.1
 flake8-django==1.1.2
 isort==5.10.1
