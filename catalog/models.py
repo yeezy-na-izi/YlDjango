@@ -4,6 +4,7 @@ from django.db import models
 from catalog.managers import ItemManager, TagManager, CategoryManager
 from catalog.validators import ValidateWordsCount, validate_brilliant
 from core.models import PublishedMixin, SlugMixin
+from tinymce.models import HTMLField
 
 from sorl.thumbnail import get_thumbnail
 from django.utils.safestring import mark_safe
@@ -15,7 +16,7 @@ class Item(PublishedMixin):
         max_length=150,
         help_text='Максимальная длинна 150'
     )
-    text = models.TextField(
+    text = HTMLField(
         verbose_name='Описание',
         help_text='Минимум 2 слова',
         validators=[

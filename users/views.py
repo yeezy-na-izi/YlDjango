@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
 
 from catalog.models import Item
 import django.contrib.auth.views as admin_views
@@ -9,44 +10,54 @@ from users.forms import UserForm, ProfileForm, RegistrationForm
 from users.models import Profile, User
 
 
-@login_required
-def profile(request):
+class Profile(View):
     template_name = 'users/profile.html'
-    liked_items = Item.objects.user_liked_items(request.user)
 
-    if request.method == 'POST':
+    def get(self, request):
+        liked_items = Item.objects.user_liked_items(request.user)
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+        context = {
+            'items': liked_items,
+            'user_form': user_form,
+            'profile_form': profile_form
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
         user_form = UserForm(request.POST, instance=request.user)
         profile_form = ProfileForm(request.POST, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             return redirect('profile')
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
+        else:
+            liked_items = Item.objects.user_liked_items(request.user)
+            user_form = UserForm(instance=request.user)
+            profile_form = ProfileForm(instance=request.user.profile)
+            context = {
+                'items': liked_items,
+                'user_form': user_form,
+                'profile_form': profile_form
+            }
+            return render(request, self.template_name, context=context)
 
-    context = {
-        'items': liked_items,
-        'user_form': user_form,
-        'profile_form': profile_form
-    }
 
-    return render(request, template_name, context=context)
-
-
-def user_detail(request, id_user):
+class UserDetail(View):
     template_name = 'users/user_detail.html'
-    user = get_object_or_404(User.objects.only(
-        'email', 'first_name', 'last_name', 'profile__birthday'
-    ).select_related('profile'), pk=id_user)
-    liked_items = Item.objects.user_liked_items(user)
 
-    context = {
-        'user': user,
-        'items': liked_items,
-    }
-
-    return render(request, template_name, context=context)
+    def get(self, request, pk):
+        user = get_object_or_404(
+            User.objects.only('email', 'first_name', 'last_name', 'profile__birthday').select_related('profile'),
+            pk=pk
+        )
+        liked_items = Item.objects.user_liked_items(user)
+        context = {
+            'user': user,
+            'items': liked_items,
+        }
+        return render(request, self.template_name, context=context)
 
 
 def user_list(request):
@@ -62,22 +73,24 @@ def user_list(request):
     return render(request, template_name, context=context)
 
 
-def signup(request):
-    template_name = 'users/signup.html'
+class SignupView(View):
+    template_name = 'users/auth/signup.html'
 
-    if request.method == 'POST':
+    def get(self, request):
+        form = RegistrationForm()
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
             return redirect('login')
-    else:
-        form = RegistrationForm()
-
-    context = {'form': form}
-
-    return render(request, template_name, context)
+        else:
+            context = {'form': form}
+            return render(request, self.template_name, context)
 
 
 # Django auth views

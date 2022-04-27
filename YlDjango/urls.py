@@ -12,4 +12,5 @@ urlpatterns = [
     path('about/', include('about.urls')),
     path('auth/', include('users.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'debug_toolbar.apps.DebugToolbarConfig',
 
     'sorl.thumbnail',
-    'django_cleanup.apps.CleanupConfig'
+    'django_cleanup.apps.CleanupConfig',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -112,7 +113,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static_dev',
+]
+
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
