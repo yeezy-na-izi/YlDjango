@@ -99,7 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/uploads/'
+MEDIA_URL = 'uploads/'
 
 MEDIA_ROOT = 'media'
 

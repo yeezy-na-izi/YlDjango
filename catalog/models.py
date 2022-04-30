@@ -127,7 +127,7 @@ class Image(models.Model):
     image_tmb.allow_tags = True
 
     def __str__(self):
-        return self.item
+        return self.item.name
 
     class Meta:
         verbose_name = 'Изображение'

@@ -59,17 +59,18 @@ class UserDetail(View):
         return render(request, self.template_name, context=context)
 
 
-def user_list(request):
+class UserList(View):
     template_name = 'users/all_users.html'
-    users = User.objects.prefetch_related(
-        Prefetch('profile', queryset=Profile.objects.all())
-    )
 
-    context = {
-        'users': users
-    }
+    def get(self, request):
+        users = User.objects.prefetch_related(
+            Prefetch('profile', queryset=Profile.objects.all())
+        )
 
-    return render(request, template_name, context=context)
+        context = {
+            'users': users
+        }
+        return render(request, self.template_name, context=context)
 
 
 class SignupView(View):
