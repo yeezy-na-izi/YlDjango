@@ -85,7 +85,7 @@ class SignupView(View):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             new_user = form.save(commit=False)
-            new_user.set_password(form.cleaned_data['password'])
+            new_user.set_password(form.cleaned_data['password1'])
             new_user.save()
             return redirect('login')
         else:
